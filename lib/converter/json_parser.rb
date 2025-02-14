@@ -1,5 +1,7 @@
 
-require "json"
+# frozen_string_literal: true
+
+require 'json'
 
 module Converter
   class JsonParser

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-require "csv"
-require_relative "../utils/hash_helper"
 
+require 'csv'
+require_relative '../utils/hash_helper'
 
 module Converter
   class Base
