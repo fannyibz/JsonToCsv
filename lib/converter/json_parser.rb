@@ -11,6 +11,8 @@ module Converter
 
     def call
       JSON.parse(File.read(@input_filepath))
+    rescue JSON::ParserError => e
+      raise e.message
     end
   end
 end

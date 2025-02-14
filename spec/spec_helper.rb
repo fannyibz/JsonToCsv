@@ -14,6 +14,7 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'fileutils'
 require_relative '../lib/converter/base'
 require_relative '../lib/converter/json_parser'
 require_relative '../lib/converter/csv_storer'
