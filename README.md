@@ -1,14 +1,44 @@
-# Json2Csv
+# JSON to CSV Converter
 
-This repository is part of: [MyJobGlasses](https://www.myjobglasses.com/) - Technical Test
+A Ruby application that converts JSON files containing arrays of objects into CSV files. Each line in the output CSV represents one object from the JSON input.
 
-The goal of this test is to write a small Ruby lib aiming to convert JSON files composed of arrays of objects (all following the same schema) to a flat CSV file where one line equals one object.
+## Requirements
 
-## Test instructions
+- Ruby 3.0.0 or higher
+- Bundler
 
-Here is the input schema (GraphQL-like) of what our app is expected to process correctly
+## Installation
 
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/json2csv.git
+cd json2csv
 ```
+
+2. Install dependencies:
+```bash
+bundle install
+```
+
+## Usage
+
+### Basic Usage
+
+Run the converter with input and output directory paths:
+```bash
+ruby lib/main.rb [input_directory] [output_directory]
+```
+
+Example:
+```bash
+ruby lib/main.rb ./input_json_files ./output_csv_files
+```
+
+### Input Format
+
+The application expects JSON files containing arrays of objects. Each object should follow this schema:
+
+```graphql
 type Profile {
   id: String!
   email: String!
@@ -20,22 +50,56 @@ type SocialProfile {
   id: String!
   picture: String
 }
-
 ```
 
-Some sample files are located in `./input_json_files` and  `./output_csv_files`, they are user provided files from the internet
+Example input JSON:
+```json
+[
+  {
+    "id": "123",
+    "email": "user@example.com",
+    "tags": ["student", "engineering"],
+    "profiles": [
+      {
+        "id": "456",
+        "picture": "https://example.com/pic.jpg"
+      }
+    ]
+  }
+]
+```
 
-You can start by writing a `main.rb` (feel free to change this name) that will perform the conversion when running `ruby main.rb [input_dir] [output_dir]` of all the files of the input directory into the output dir
+### Output Format
 
-## Test rating criteria
+The converter will create CSV files with:
+- Headers based on the JSON object keys
+- One row per JSON object
+- Arrays and nested objects are flattened
 
-- clean
-- extensible
-- robust (don't overlook edge cases, use exceptions where needed, ...)
-- tested
+Example output CSV:
+```csv
+id,email,tags,profiles_id,profiles_picture
+123,user@example.com,"student,engineering",456,https://example.com/pic.jpg
+```
 
-You have no limitation of time, what we expect is to have a discussion about your choices and your code implementation.
+### Error Handling
 
-To share your code, it's your choice again: send us a zip or a GitHub link!
+The application will:
+- Create the output directory if it doesn't exist
+- Skip invalid JSON files with error messages
+- Continue processing remaining files if one fails
 
-Good luck!
+## Development
+
+### Running Tests
+
+Run all tests:
+```bash
+bundle exec rspec
+```
+
+Run specific test file:
+```bash
+bundle exec rspec spec/lib/converter/base_spec.rb
+```
+
